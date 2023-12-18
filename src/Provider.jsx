@@ -1,10 +1,8 @@
-import * as React from 'react'
-
-// 1. import `ChakraProvider` component
+import React from 'react'
 import { ChakraProvider } from '@chakra-ui/react';
 import { SelectedElementProvider } from './context/selectedElementContext';
 
-function Provider({ children }: { children: React.ReactNode }) {
+function Provider({ children }) {
     return (
         <SelectedElementProvider>
             <ChakraProvider>

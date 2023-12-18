@@ -1,15 +1,10 @@
 import { GiCube, GiHolosphere, GiFinishLine } from 'react-icons/gi';
 import { Box, VStack, chakra } from '@chakra-ui/react'
-import { BoxGeometry, MeshBasicMaterial, Mesh, Scene, PerspectiveCamera } from 'three';
+import { BoxGeometry, MeshBasicMaterial, Mesh } from 'three';
 import { useSelectedElement } from '../context/selectedElementContext';
 
-interface Props {
-    animate: () => void,
-    scene: Scene,
-    camera: PerspectiveCamera
-}
 
-function LeftMenu({ animate, scene, camera }: Props) {
+function LeftMenu({ animate, scene, camera }) {
 
     const { addToCanvas } = useSelectedElement();
 

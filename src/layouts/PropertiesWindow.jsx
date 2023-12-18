@@ -1,14 +1,18 @@
-import { Box, FormControl, FormLabel, Input, Heading, Card, CardHeader, CardBody, Text, Stack, StackDivider } from '@chakra-ui/react'
+import {
+    Box,
+    Heading,
+    Card,
+    CardHeader,
+    CardBody,
+    Text,
+    Stack,
+    StackDivider
+} from '@chakra-ui/react'
 import { useSelectedElement } from '../context/selectedElementContext'
 import { useEffect } from 'react';
 
-interface Props {
 
-}
-
-function PropertiesWindow({ }: Props) {
-
-
+function PropertiesWindow() {
     const { selectedElement } = useSelectedElement();
 
     useEffect(() => {
@@ -30,6 +34,16 @@ function PropertiesWindow({ }: Props) {
                             <Heading size='xs' textTransform='uppercase'>
                                 Summary
                             </Heading>
+                            {
+                                selectedElement ?
+                                    <Text pt='2' fontSize='sm'>
+                                        {selectedElement.position.x}
+                                    </Text>
+                                    :
+                                    <Text pt='2' fontSize='sm'>
+                                        No element selected
+                                    </Text>
+                            }
                             <Text pt='2' fontSize='sm'>
                                 View a summary of all your clients over the last month.
                             </Text>
