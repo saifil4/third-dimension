@@ -4,67 +4,60 @@ import {
     Card,
     CardHeader,
     CardBody,
-    Text,
-    Stack,
-    StackDivider
+    Input,
+    FormControl,
+    FormLabel
 } from '@chakra-ui/react'
 import { useSelectedElement } from '../context/selectedElementContext'
+import { useState } from 'react';
 import { useEffect } from 'react';
 
-
 function PropertiesWindow() {
-    const { selectedElement } = useSelectedElement();
+
+
+    const { selectedElement, updateArgs } = useSelectedElement();
+
+    const [element, setElement] = useState(selectedElement);
 
     useEffect(() => {
-        selectedElement?.scale.setX(3)
-        console.log(selectedElement)
+        setElement(selectedElement)
     }, [selectedElement])
 
 
+    const handleBlur = (e) => {
+        updateArgs(element)
+    }
+
+    const handleChange = (e) => {
+        setElement({
+            ...element,
+            props: {
+                ...element.props,
+                args: {
+                    ...element.props.args,
+                    [e.target.name]: e.target.value
+                }
+            }
+        })
+    }
+
     return (
         <Box w="400px" h="full" bg="gray.200">
-            <Card>
+            <Card h="full">
                 <CardHeader>
                     <Heading size='md'>Properties</Heading>
                 </CardHeader>
-
                 <CardBody>
-                    <Stack divider={<StackDivider />} spacing='4'>
-                        <Box>
-                            <Heading size='xs' textTransform='uppercase'>
-                                Summary
-                            </Heading>
-                            {
-                                selectedElement ?
-                                    <Text pt='2' fontSize='sm'>
-                                        {selectedElement.position.x}
-                                    </Text>
-                                    :
-                                    <Text pt='2' fontSize='sm'>
-                                        No element selected
-                                    </Text>
-                            }
-                            <Text pt='2' fontSize='sm'>
-                                View a summary of all your clients over the last month.
-                            </Text>
-                        </Box>
-                        <Box>
-                            <Heading size='xs' textTransform='uppercase'>
-                                Overview
-                            </Heading>
-                            <Text pt='2' fontSize='sm'>
-                                Check out the overview of your clients.
-                            </Text>
-                        </Box>
-                        <Box>
-                            <Heading size='xs' textTransform='uppercase'>
-                                Analysis
-                            </Heading>
-                            <Text pt='2' fontSize='sm'>
-                                See a detailed analysis of all your business clients.
-                            </Text>
-                        </Box>
-                    </Stack>
+                    {
+                        element &&
+                        Object.entries(element.props.args).map(([key, value]) => (
+                            <FormControl>
+                                <FormLabel>{key}</FormLabel>
+                                <Input onBlur={handleBlur} name={key} placeholder={key} value={value} onChange={handleChange} />
+                            </FormControl>
+
+                        ))
+                    }
                 </CardBody>
             </Card>
         </Box>

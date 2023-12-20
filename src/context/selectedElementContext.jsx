@@ -1,11 +1,6 @@
 import React, { useContext, useState } from "react";
 
-const SelectedElementContext = React.createContext({
-    allElements: [],
-    selectedElement: null,
-    addToCanvas(id) {},
-    selectElement(id) {},
-});
+const SelectedElementContext = React.createContext(null);
 
 export const useSelectedElement = () => {
     return useContext(SelectedElementContext);
@@ -13,23 +8,52 @@ export const useSelectedElement = () => {
 
 export const SelectedElementProvider = ({ children }) => {
 
-    const [allElements, setAllElements] = useState([]);
+
 
     const [selectedElement, setSelectedElement] = useState(null);
+    const [isOrbitControlEnabled, setIsOrbitControlEnabled] = useState(true);
 
-    const addToCanvas = (id) => {
-        setAllElements([...allElements, id])
+    const element = {
+        id: 1,
+        type: 'box',
+        props: {
+            args: {
+                height: 1,
+                width: 1,
+                depth: 1
+            },
+        }
     }
+
+    const enableOrbitControl = () => {
+        setIsOrbitControlEnabled(true)
+    }
+
+    const disabeOrbitControl = () => {
+        setIsOrbitControlEnabled(false)
+    }
+
+    const [allElements, setAllElements] = useState([element]);
 
     const selectElement = (item) => {
         setSelectedElement(item)
     }
 
+    const updateArgs = (updatedElement) => {
+        if (!updatedElement) return null;
+        setAllElements(prev => prev.map(element => {
+            return updatedElement.id === element.id ? updatedElement : element;
+        }))
+    }
+
     const value = {
-        allElements: allElements,
-        selectedElement: selectedElement,
-        addToCanvas: addToCanvas,
-        selectElement: selectElement
+        selectedElement,
+        isOrbitControlEnabled,
+        allElements,
+        selectElement,
+        updateArgs,
+        enableOrbitControl,
+        disabeOrbitControl
     }
 
 
