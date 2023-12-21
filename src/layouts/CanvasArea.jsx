@@ -25,7 +25,7 @@ const CanvasArea = () => {
 
     return (
         <Canvas >
-            <gridHelper args={[100, 100]} />
+            <gridHelper args={[1000, 1000]} />
             <ambientLight intensity={1} />
             {
                 allElements.map((element, index) => (
