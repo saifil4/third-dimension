@@ -1,21 +1,15 @@
 import React, { useContext, useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
+import { Geometries } from "../Constants";
 
 const SelectedElementContext = React.createContext(null);
 
-export const useSelectedElement = () => {
-    return useContext(SelectedElementContext);
-}
+export const useSelectedElement = () => useContext(SelectedElementContext);
 
-export const SelectedElementProvider = ({ children }) => {
-
-
-
-    const [selectedElement, setSelectedElement] = useState(null);
-    const [isOrbitControlEnabled, setIsOrbitControlEnabled] = useState(true);
-
+const getNewElement = (geometry) => {
     const element = {
-        id: 1,
-        type: 'box',
+        id: uuidv4(),
+        type: geometry,
         props: {
             args: {
                 height: 1,
@@ -24,20 +18,21 @@ export const SelectedElementProvider = ({ children }) => {
             },
         }
     }
+    return element;
+}
 
-    const enableOrbitControl = () => {
-        setIsOrbitControlEnabled(true)
-    }
 
-    const disabeOrbitControl = () => {
-        setIsOrbitControlEnabled(false)
-    }
 
-    const [allElements, setAllElements] = useState([element]);
+export const SelectedElementProvider = ({ children }) => {
 
-    const selectElement = (item) => {
-        setSelectedElement(item)
-    }
+    const [selectedElement, setSelectedElement] = useState(null);
+    const [isOrbitControlEnabled, setIsOrbitControlEnabled] = useState(true);
+    const [allElements, setAllElements] = useState([]);
+
+    const enableOrbitControl = () => setIsOrbitControlEnabled(true)
+    const disabeOrbitControl = () => setIsOrbitControlEnabled(false)
+    const selectElement = (item) => setSelectedElement(item)
+    const addNewElement = (geometry) => setAllElements(prev => [...prev, getNewElement(geometry)])
 
     const updateArgs = (updatedElement) => {
         if (!updatedElement) return null;
@@ -53,9 +48,9 @@ export const SelectedElementProvider = ({ children }) => {
         selectElement,
         updateArgs,
         enableOrbitControl,
-        disabeOrbitControl
+        disabeOrbitControl,
+        addNewElement
     }
-
 
     return (
         <SelectedElementContext.Provider value={value}>

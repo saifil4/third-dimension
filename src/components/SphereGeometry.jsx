@@ -9,7 +9,7 @@ const BoxGeometry = ({ element }) => {
     return (
         <PivotControls onDragStart={disabeOrbitControl} onDragEnd={enableOrbitControl} >
             <mesh onClick={() => selectElement(element)}>
-                <boxGeometry args={...Object.values(element.props.args)} />
+                <sphereGeometry args={...Object.values(element.props.args)} />
                 <meshStandardMaterial color="hotpink" />
             </mesh>
         </PivotControls >
