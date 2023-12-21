@@ -7,7 +7,7 @@ import CanvasArea from './layouts/CanvasArea';
 
 function App() {
   return (
-    <HStack flexDirection="row" h="full" w="full">
+    <HStack flexDirection="row" h="full" w="full" gap={0}>
       <LeftMenu />
       <Box w="calc(100% - 500px)" h="full" id="canvas-container">
         <CanvasArea />
