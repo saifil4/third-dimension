@@ -1,5 +1,5 @@
 import React from 'react';
-import { PivotControls } from '@react-three/drei';
+import { PivotControls, TransformControls } from '@react-three/drei';
 import { useSelectedElement } from '../context/selectedElementContext';
 
 const BoxGeometry = ({ element }) => {
@@ -7,12 +7,15 @@ const BoxGeometry = ({ element }) => {
     const { selectElement, enableOrbitControl, disabeOrbitControl } = useSelectedElement();
 
     return (
-        <PivotControls onDragStart={disabeOrbitControl} onDragEnd={enableOrbitControl} >
+        // <PivotControls onDragStart={disabeOrbitControl} onDragEnd={enableOrbitControl} >
+        <TransformControls>
             <mesh onClick={() => selectElement(element)}>
                 <boxGeometry args={...Object.values(element.props.args)} />
                 <meshStandardMaterial color="hotpink" />
             </mesh>
-        </PivotControls >
+        </TransformControls>
+
+        // </PivotControls >
     )
 }
 
