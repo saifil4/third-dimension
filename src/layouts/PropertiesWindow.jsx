@@ -6,7 +6,12 @@ import {
     CardBody,
     Input,
     FormControl,
-    FormLabel
+    FormLabel,
+    Tabs,
+    Tab,
+    TabPanel,
+    TabList,
+    TabPanels
 } from '@chakra-ui/react'
 import { useSelectedElement } from '../context/selectedElementContext'
 import { useState } from 'react';
@@ -48,16 +53,32 @@ function PropertiesWindow() {
                     <Heading size='md'>Properties</Heading>
                 </CardHeader>
                 <CardBody>
-                    {
-                        element &&
-                        Object.entries(element.props.args).map(([key, value]) => (
-                            <FormControl>
-                                <FormLabel>{key}</FormLabel>
-                                <Input onBlur={handleBlur} name={key} placeholder={key} value={value} onChange={handleChange} />
-                            </FormControl>
 
-                        ))
-                    }
+
+                    <Tabs variant='soft-rounded' colorScheme='green'>
+                        <TabList>
+                            <Tab>Dimentions</Tab>
+                            <Tab>Maetrial</Tab>
+                            <Tab>Position</Tab>
+                        </TabList>
+                        <TabPanels>
+                            <TabPanel>
+                                {
+                                    element &&
+                                    Object.entries(element.props.args).map(([key, value]) => (
+                                        <FormControl>
+                                            <FormLabel>{key}</FormLabel>
+                                            <Input onBlur={handleBlur} name={key} placeholder={key} value={value} onChange={handleChange} />
+                                        </FormControl>
+
+                                    ))
+                                }
+                            </TabPanel>
+                            <TabPanel>
+                                <p>two!</p>
+                            </TabPanel>
+                        </TabPanels>
+                    </Tabs>
                 </CardBody>
             </Card>
         </Box>
